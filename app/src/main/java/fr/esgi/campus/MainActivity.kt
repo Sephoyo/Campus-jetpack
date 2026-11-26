@@ -12,10 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import fr.esgi.campus.ui.theme.CampusTheme
+import android.util.Log
 
+private const val TAG = "Campus"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Étape 1 :Initializer type mismatch: expected 'Int', actual 'String'
+        // Étape 2 : erreur d'exécution (runtime) — l'app s'installe puis crashe au lancement
+        // Logcat : java.lang.NumberFormatException: For input string: "douze" (MainActivity.kt:20)
+
+        val capacity = "douze".toIntOrNull() ?: 0
+        Log.d(TAG, "Places : $capacity")
         enableEdgeToEdge()
         setContent {
             CampusTheme {
