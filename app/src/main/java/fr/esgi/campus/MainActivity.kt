@@ -15,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import fr.esgi.campus.ui.theme.CampusTheme
 import android.util.Log
+import androidx.compose.ui.unit.dp
+import fr.esgi.campus.data.Event.Event
+import fr.esgi.campus.ui.theme.EventCard
 
 private const val TAG = "Campus"
 class MainActivity : ComponentActivity() {
@@ -30,11 +33,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             CampusTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    EventHeader(
-                        "Bonjour",
-                        "Caca",
-                        modifier = Modifier.padding(innerPadding)
-
+                    val event = Event(1, "3x3 Basket", "Sport", "Calais", 150)
+                    EventCard(
+                        event = event,
+                        onClick = { Log.d(TAG, "Clic sur ${event.title}") },
+                        modifier = Modifier.padding(innerPadding).padding(16.dp)
                     )
                 }
             }
@@ -42,52 +45,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CampusTheme {
-        Greeting("Android")
-    }
-}
-
-@Composable
-fun EventHeader(title: String, category : String?, modifier: Modifier = Modifier, location: String? = null) {
-    Column {
-        Text(
-            text = "$title !",
-            modifier = modifier
-        )
-        Text(
-            text = "$category",
-            modifier = modifier
-        )
-        Text(
-            text = location ?: "Lieu à confirmer",
-            modifier = modifier
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun EventHeaderPreview() {
-    CampusTheme {
-        EventHeader(title = "Atelier Kotlin", category = "Atelier", location = "Salle B204")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun EventHeaderSansLieuPreview() {
-    CampusTheme {
-        EventHeader(title = "Atelier Kotlin", category = "Atelier")
-    }
-}
