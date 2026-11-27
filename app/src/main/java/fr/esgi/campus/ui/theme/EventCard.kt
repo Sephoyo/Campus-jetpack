@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,7 +21,12 @@ import fr.esgi.campus.data.Event.Event
 import fr.esgi.campus.data.Event.displayLocation
 
 @Composable
-fun EventCard(event: Event, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun EventCard(
+    event: Event,
+    onClick: () -> Unit,
+    onBook: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(onClick = onClick, modifier = modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -31,7 +37,6 @@ fun EventCard(event: Event, onClick: () -> Unit, modifier: Modifier = Modifier) 
                 Text(
                     text = event.title,
                     style = MaterialTheme.typography.bodyLarge,
-                    // weight : le titre prend la place qui reste, la catégorie reste visible
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -47,12 +52,21 @@ fun EventCard(event: Event, onClick: () -> Unit, modifier: Modifier = Modifier) 
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            // Étape 3 : bouton « Voir » à droite, même onClick que la carte
-            TextButton(
-                onClick = onClick,
-                modifier = Modifier.align(Alignment.End)
+            // Étape 3 : actions alignées à droite (« Voir » et « Réserver »)
+            Row(
+                modifier = Modifier.align(Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Voir")
+                TextButton(onClick = onClick) {
+                    Text("Voir")
+                }
+                Button(
+                    onClick = onBook,
+                    enabled = event.capacity > 0 // Grisé si capacity == 0
+                ) {
+                    Text("Réserver")
+                }
             }
         }
     }
@@ -71,6 +85,7 @@ fun EventCardTitreLongPreview() {
                 capacity = 150
             ),
             onClick = {},
+            onBook = {},
             modifier = Modifier.padding(16.dp)
         )
     }
@@ -89,6 +104,26 @@ fun EventCardSansLieuPreview() {
                 capacity = 2
             ),
             onClick = {},
+            onBook = {},
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EventCardCompletPreview() {
+    CampusTheme {
+        EventCard(
+            event = Event(
+                id = 2,
+                title = "Concert de fin d'année",
+                category = "Culture",
+                location = "Grande Salle",
+                capacity = 0
+            ),
+            onClick = {},
+            onBook = {},
             modifier = Modifier.padding(16.dp)
         )
     }
