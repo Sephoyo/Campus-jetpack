@@ -15,10 +15,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.esgi.campus.data.Event.Event
-import fr.esgi.campus.data.Event.displayLocation
+import fr.esgi.campus.R
 
 @Composable
 fun EventCard(
@@ -48,7 +49,7 @@ fun EventCard(
 
             // Étape 2 : le lieu en dessous, ou « Lieu à confirmer » s'il est null
             Text(
-                text = event.displayLocation(),
+                text = event.location ?: stringResource(R.string.location_to_confirm),
                 style = MaterialTheme.typography.bodyMedium
             )
 
@@ -59,13 +60,18 @@ fun EventCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = onClick) {
-                    Text("Voir")
+                    Text(stringResource(R.string.action_view))
                 }
                 Button(
                     onClick = onBook,
                     enabled = event.capacity > 0 // Grisé si capacity == 0
                 ) {
-                    Text("Réserver")
+                    // Complet : un mot, pas seulement le bouton grisé (rien ne repose sur la couleur seule)
+                    Text(
+                        stringResource(
+                            if (event.capacity > 0) R.string.action_book else R.string.event_full
+                        )
+                    )
                 }
             }
         }

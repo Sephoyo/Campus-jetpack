@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Campus</string>
+
+    <!-- Carte et détail d'un événement -->
+    <string name="location_to_confirm">Lieu à confirmer</string>
+    <string name="action_view">Voir</string>
+    <string name="action_book">Réserver</string>
+    <string name="event_full">Complet</string>
+    <string name="no_description">Pas encore de description.</string>
+
+    <!-- Nombre de places : %d est remplacé par le nombre -->
+    <plurals name="seats_available">
+        <item quantity="one">%d place disponible</item>
+        <item quantity="many">%d de places disponibles</item>
+        <item quantity="other">%d places disponibles</item>
+    </plurals>
 </resources>

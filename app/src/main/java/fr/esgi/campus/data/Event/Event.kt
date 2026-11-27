@@ -5,7 +5,8 @@ data class Event(
     val title: String,
     val category: String,
     val location: String?, // Nullable pour gérer l'événement sans lieu
-    val capacity: Int
+    val capacity: Int,
+    val description: String = "" // valeur par défaut : les 5 événements compilent toujours
 )
 
 val sampleEvents = listOf(
